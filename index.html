@@ -2,12 +2,12 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 <title>根本背不起來</title>
 
 <style>
 html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Condensed", "Noto Sans TC", "微軟正黑體", sans-serif;}
-.all{ display: flex; flex-direction: column; width: 500px; max-width: 100vw; height: calc(100vh - 20px); padding: 10px 10px 0; margin: 10px auto 0; background: #b2d5e1; border-radius: 5px; box-sizing: border-box;}
+.all{ display: flex; flex-direction: column; width: 500px; max-width: calc(100vw - 20px); height: calc(100vh - 20px); padding: 10px 10px 0; margin: 10px auto 0; background: #b2d5e1; border-radius: 5px; box-sizing: border-box;}
 
 .wordCount{ display: flex; justify-content: flex-end;}
 .wordCount #wordCount{ display: none;}
@@ -18,8 +18,8 @@ html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Cond
 .card #card{ margin: 10px 0 0 0; padding: 10px 0; text-align: center; font-size: 1.5rem; line-height: 1em; border: 1px dashed #fff8f2; border-radius: 5px; color: #fff; cursor: pointer;}
 .btn_next{ margin: 10px 0 0 0; width: 100%; padding: 10px 0; background: #fff; box-shadow: none; border: none; font-size: 1.5rem; line-height: 1em; border-radius: 5px; color: #5ba7c0; cursor: pointer;}
 
-.addZone{ display: flex; gap: 10px; margin: 0 0 0 -10px; padding: 10px; width: calc(100% + 20px); background: #5ba7c0; border-radius: 0 0 5px 5px; box-sizing: border-box;}
-.addZone input{ border: none; padding: 5px 10px; border-radius: 5px;}
+.addZone{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 0 0 -10px; padding: 10px; width: calc(100% + 20px); background: #5ba7c0; border-radius: 0 0 5px 5px; box-sizing: border-box;}
+.addZone input{ width: 100%; border: none; padding: 5px 10px; border-radius: 5px; box-sizing: border-box; text-align: center;}
 .addZone button{ border: none; box-shadow: none; width: 100%; border-radius: 5px; background: #357189; color: #fff; cursor: pointer;}
 </style>
 </head>
