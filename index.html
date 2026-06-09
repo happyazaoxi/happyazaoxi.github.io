@@ -3,90 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>背單字卡片</title>
+<title>根本背不起來</title>
 
 <style>
-body{
-  font-family: Arial, "Microsoft JhengHei", sans-serif;
-  background:#f5f5f5;
-  margin:0;
-  padding:30px;
-  text-align:center;
-}
+html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Condensed", "Noto Sans TC", "微軟正黑體", sans-serif;}
+.all{ width: 500px; max-width: 100vw; height: calc(100vh - 20px); padding: 10px; margin: 10px auto 0; background: #b2d5e1; border-radius: 5px; box-sizing: border-box;}
 
-.card{
-  width:320px;
-  min-height:140px;
-  margin:20px auto;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:32px;
-  cursor:pointer;
-  padding:20px;
-  word-break:break-word;
-}
+.wordCount{ display: flex; justify-content: flex-end;}
+.wordCount #wordCount{ display: none;}
+.wordCount #progress{ padding: 5px 10px; background: #5ba7c0; color: #fff; border-radius: 5px;}
 
-.answer{
-  min-height:40px;
-  font-size:24px;
-  color:#444;
-  margin-top:15px;
-}
+.card{ margin: 10px 0 0; height: calc(100vh - 200px);}
+.card #answer{ display: flex; align-items: center; justify-content: center; height: calc(100% - 200px); background: #fff8f2; color: #5ba7c0; border-radius: 5px; font-size: 2rem;}
+.card #card{ margin: 10px 0 0 0; padding: 10px 0; text-align: center; font-size: 1.5rem; line-height: 1em; border: 1px dashed #fff8f2; border-radius: 5px; color: #fff; cursor: pointer;}
+.btn_next{ margin: 10px 0 0 0; width: 100%; padding: 10px 0; background: #fff; box-shadow: none; border: none; font-size: 1.5rem; line-height: 1em; border-radius: 5px; color: #5ba7c0; cursor: pointer;}
 
-.info{
-  color:#666;
-  margin:6px 0;
-}
-
-button{
-  padding:10px 20px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#4CAF50;
-  color:white;
-  margin:5px;
-}
-
-input{
-  padding:10px;
-  margin:5px;
-  border:1px solid #ccc;
-  border-radius:8px;
-  width:220px;
-}
-
-hr{
-  margin:40px auto;
-  max-width:600px;
-}
+.addZone{ display: flex; gap: 10px; background: #5ba7c0; width: calc(100% + 20px); margin: 0 0 0 -10px;}
 </style>
 </head>
 
 <body>
 
-<h1>📚 背單字卡片</h1>
+<div class="all">
 
-<div class="info" id="wordCount">載入中...</div>
-<div class="info" id="progress"></div>
+  <section class="wordCount">
+    <div class="info" id="wordCount">載入中...</div>
+    <div class="info" id="progress"></div>
+  </section>
 
-<div class="card" id="card">載入中...</div>
-<div class="answer" id="answer"></div>
+  <section class="card">
+    <div id="answer"></div>
+    <div id="card">載入中...</div>
+    <button onclick="nextCard()" class="btn_next">下一張</button>
+  </section>
+  
+  <section class="addZone">
+    <input id="question" placeholder="問題，例如 행복">
+    <input id="answerInput" placeholder="答案，例如 快樂">
+    <br>
+    <button onclick="addWord()">新增</button>
+  </section>
 
-<button onclick="nextCard()">下一張</button>
-
-<hr>
-
-<h2>新增單字</h2>
-
-<input id="question" placeholder="問題，例如 행복">
-<input id="answerInput" placeholder="答案，例如 快樂">
-<br>
-<button onclick="addWord()">新增單字</button>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -142,7 +100,7 @@ async function loadWords() {
   words = data;
 
   wordCount.textContent =
-    `目前單字總數：${words.length}`;
+    `目前總數：${words.length}`;
 
   shuffledWords = shuffleArray(words);
   currentIndex = 0;
@@ -176,7 +134,7 @@ function nextCard() {
   answer.textContent = "";
 
   progress.textContent =
-    `本輪進度：${currentIndex} / ${shuffledWords.length}`;
+    `${currentIndex} / ${shuffledWords.length}`;
 }
 
 card.addEventListener("click", function () {
