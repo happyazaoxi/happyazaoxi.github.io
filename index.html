@@ -1,314 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="jquery-3.5.1.min.js"></script>
-    <script src="js.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css" />
+  <meta charset="UTF-8" />
+  <title>背單字卡片</title>
+  <style>
+    body {
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .card {
+      background: white;
+      width: 300px;
+      margin: 20px auto;
+      padding: 50px 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      font-size: 32px;
+      cursor: pointer;
+    }
+
+    .answer {
+      font-size: 24px;
+      min-height: 36px;
+      color: #555;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <a href="https://www.twitch.tv/azaoxi" target="_blank"><img src="images/logo.jpg"></a>
-        <span>版本：10.25.15</span>
-        <div>
-            <a href="javascript:void(0);" class="active">武器</a>
-            <a href="javascript:void(0);">副手</a>
-            <a href="javascript:void(0);">頭盔</a>
-            <a href="javascript:void(0);">鎧甲</a>
-            <a href="javascript:void(0);">鞋子</a>
-            <a href="javascript:void(0);">披風</a>
-            <div>
-                <img src="images/select_arrow.png">
-                <select class="weapons">
-                    <option value="0">劍</option>
-                    <option value="1">斧</option>
-                    <option value="2">錘矛</option>
-                    <option value="3">鎚子</option>
-                    <option value="4">戰爭手套</option>
-                </select>
-            </div>
-        </div>
-    </header>
+  <h1>背單字卡片</h1>
 
-    <div class="all">
-        <!--劍 weapons_01-->
-        <section class="weapons_01">
-            <div>
-                <p>闊劍<br><span>單手</span></p>
-                <img src="https://render.albiononline.com/v1/item/Master's%20Broadsword.png">
-            </div>
-            <img src="https://render.albiononline.com/v1/spell/Mighty%20Blow.png" class="skill">
-            <H3>重獲能量<span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">E</mark>
-            <mark class="green2">恢復</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <div>
-                <p>闊刃大劍<br><span>雙手</span></p>
-                <img src="https://render.albiononline.com/v1/item/Master's%20Claymore.png">
-            </div>
-            <img src="https://render.albiononline.com/v1/spell/Charge.png" class="skill">
-            <H3>重獲能量<span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">E</mark>
-            <mark class="green2">恢復</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <div>
-                <p>雙劍<br><span>雙手</span></p>
-                <img src="https://render.albiononline.com/v1/item/Master's%20Dual%20Swords.png">
-            </div>
-            <img src="https://render.albiononline.com/v1/spell/Spinning%20Blades.png" class="skill">
-            <H3>重獲能量<span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">E</mark>
-            <mark class="green2">恢復</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <div>
-                <p>王者之劍<br><span>單手</span></p>
-                <img src="https://render.albiononline.com/v1/item/Master's%20Clarent%20Blade.png">
-            </div>
-            <img src="https://render.albiononline.com/v1/spell/Crescent%20Slash.png" class="skill">
-            <H3>重獲能量<span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">E</mark>
-            <mark class="green2">恢復</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <div>
-                <p>斷水劍<br><span>雙手</span></p>
-                <img src="https://render.albiononline.com/v1/item/Master's%20Carving%20Sword.png">
-            </div>
-            <img src="https://render.albiononline.com/v1/spell/Fearless%20Strike.png" class="skill">
-            <H3>重獲能量<span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">E</mark>
-            <mark class="green2">恢復</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <div>
-                <p>雙刀<br><span>雙手</span></p>
-                <img src="https://render.albiononline.com/v1/item/Master's%20Galatine%20Pair.png">
-            </div>
-            <img src="https://render.albiononline.com/v1/spell/Soulless%20Stream.png" class="skill">
-            <H3>重獲能量<span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">E</mark>
-            <mark class="green2">恢復</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <div>
-                <p>擁王者<br><span>雙手</span></p>
-                <img src="https://render.albiononline.com/v1/item/Master's%20Kingmaker.png">
-            </div>
-            <img src="https://render.albiononline.com/v1/spell/Majestic%20Smash.png" class="skill">
-            <H3>重獲能量<span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">E</mark>
-            <mark class="green2">恢復</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <b class="weapons_01"></b>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/Heroic%20Strike.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">Q</mark>
-            <mark class="blue">增益</mark>
-            <mark class="green">盾</mark>
-            <mark class="green2">恢復</mark>
-            <mark class="red">傷害</mark>
-            <mark class="yellow">淨化</mark>
-            <mark class="orange">控制</mark>
-            <mark class="purple">減益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/Heroic%20Cleave.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">Q</mark>
-            <mark class="blue">增益</mark>
-            <mark class="green">盾</mark>
-            <mark class="green2">恢復</mark>
-            <mark class="red">傷害</mark>
-            <mark class="yellow">淨化</mark>
-            <mark class="orange">控制</mark>
-            <mark class="purple">減益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <b class="weapons_01"></b>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/Blade%20Cyclone.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">W</mark>
-            <mark class="blue">增益</mark>
-            <mark class="green">盾</mark>
-            <mark class="green2">恢復</mark>
-            <mark class="red">傷害</mark>
-            <mark class="yellow">淨化</mark>
-            <mark class="orange">控制</mark>
-            <mark class="purple">減益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/Interrupt.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">W</mark>
-            <mark class="blue">增益</mark>
-            <mark class="green">盾</mark>
-            <mark class="green2">恢復</mark>
-            <mark class="red">傷害</mark>
-            <mark class="yellow">淨化</mark>
-            <mark class="orange">控制</mark>
-            <mark class="purple">減益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/SPLITTINGSLASH.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">W</mark>
-            <mark class="blue">增益</mark>
-            <mark class="green">盾</mark>
-            <mark class="green2">恢復</mark>
-            <mark class="red">傷害</mark>
-            <mark class="yellow">淨化</mark>
-            <mark class="orange">控制</mark>
-            <mark class="purple">減益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/Hamstring.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">W</mark>
-            <mark class="blue">增益</mark>
-            <mark class="green">盾</mark>
-            <mark class="green2">恢復</mark>
-            <mark class="red">傷害</mark>
-            <mark class="yellow">淨化</mark>
-            <mark class="orange">控制</mark>
-            <mark class="purple">減益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/PARRY.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">W</mark>
-            <mark class="blue">增益</mark>
-            <mark class="green">盾</mark>
-            <mark class="green2">恢復</mark>
-            <mark class="red">傷害</mark>
-            <mark class="yellow">淨化</mark>
-            <mark class="orange">控制</mark>
-            <mark class="purple">減益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/Iron%20Will.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">W</mark>
-            <mark class="blue">增益</mark>
-            <mark class="green">盾</mark>
-            <mark class="green2">恢復</mark>
-            <mark class="red">傷害</mark>
-            <mark class="yellow">淨化</mark>
-            <mark class="orange">控制</mark>
-            <mark class="purple">減益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <b class="weapons_01"></b>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/Deep%20Cuts.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span>被動技能</span></H3>
-            <mark class="gray">1</mark>
-            <mark class="blue">增益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/Weakening.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span>被動技能</span></H3>
-            <mark class="gray">1</mark>
-            <mark class="blue">增益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/Heroic%20Fighting.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span>被動技能</span></H3>
-            <mark class="gray">1</mark>
-            <mark class="blue">增益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
-        <section class="weapons_01">
-            <img src="https://render.albiononline.com/v1/spell/PASSIVE_ARMORCHANCE_AXE.png" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span>被動技能</span></H3>
-            <mark class="gray">1</mark>
-            <mark class="blue">增益</mark>
-            <hr>
-            稍作休息，每<span>0.5</span>秒回復<span>18</span>點能量，引導最多持續<span>4</span>秒。
-        </section>
+  <div id="card" class="card">載入中...</div>
+  <div id="answer" class="answer"></div>
 
+  <button onclick="nextCard()">下一張</button>
 
+  <hr>
 
+  <h2>新增單字</h2>
+  <input id="english" placeholder="英文，例如 happy">
+  <input id="chinese" placeholder="中文，例如 快樂">
+  <button onclick="addWord()">新增</button>
 
-        
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-        <!--用字範例
-        <section>
-            <img src="" class="skill">
-            <H3>技能名稱<span class="gray">共通</span><span><img src="images/mana.png">0</span><span><img src="images/cd.png">30s</span><span>主動技能</span></H3>
-            <mark class="gray">Q</mark>
-            <mark class="blue">增益</mark>
-            <mark class="green">盾</mark>
-            <mark class="green2">恢復</mark>
-            <mark class="red">傷害</mark>
-            <mark class="yellow">淨化</mark>
-            <mark class="orange">控制</mark>
-            <mark class="purple">減益</mark>
-            
-            <hr>
-            MaxHP+1000、MaxSP+200。<br>
-            精煉+7時，MHP+5%、MSP+5%<br>
-            精煉+9時，MHP+5%、MSP+5%、SP恢復力+100%
-            <ul class="green">
-                <li>精煉值每+1，物理/魔法破防+3%。</li>
-                <li>禪心每1級，魔法破防+3%。</li>
-                <li><span>單手劍使用熟練度</span>每1級，物理破防+3%。</li>
-                <li>搭配<span>影子超級初學者神盾</span>時，物理破防+40%+精煉值總合。</li>
-            </ul>
-            <ul class="blue">
-                <li>精煉+9時，可使用<span>野蠻凶砍</span>(與自己的武器研究技能相同等級)。</li>
-                <li>搭配<span>超級初學者物理手套</span>、<span>耳環</span>、<span>墜子</span>時，可使用<span>連續盾擊</span>5級。</li>
-            </ul>
-            <ul class="red">
-                <li>搭配影子<span>超級初學者物理手套</span>、<span>耳環</span>、<span>墜子</span>時，精煉總合每+1，<span>背刺</span>、<span>潛擊</span>、<span>迴旋盾擊</span>、<span>連續盾擊</span>傷害增加+2%。</li>
-            </ul>
-        </section>
-        -->
-    </div>
+  <script>
+    const SUPABASE_URL = "https://khtgqtvvpunzbicuvbbc.supabase.co/rest/v1/";
+    const SUPABASE_KEY = "sb_publishable_gJrHKH854Gyxgqt67DZkAQ_knUwZvTA";
 
-    <footer>
-        如果這些資料對你有幫助，幫我在twitch按個<a href="https://www.twitch.tv/azaoxi" target="_blank">追隨</a>吧 ：）</a>
-    </footer>
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let words = [];
+    let currentWord = null;
+    let showEnglishFirst = true;
+    let isAnswerShown = false;
+
+    const card = document.getElementById("card");
+    const answer = document.getElementById("answer");
+
+    async function loadWords() {
+      const { data, error } = await db
+        .from("words")
+        .select("*")
+        .order("id", { ascending: true });
+
+      if (error) {
+        console.error(error);
+        card.textContent = "讀取失敗";
+        return;
+      }
+
+      words = data;
+      nextCard();
+    }
+
+    function nextCard() {
+      if (words.length === 0) {
+        card.textContent = "目前沒有單字";
+        answer.textContent = "";
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * words.length);
+      currentWord = words[randomIndex];
+
+      showEnglishFirst = Math.random() > 0.5;
+      isAnswerShown = false;
+
+      card.textContent = showEnglishFirst
+        ? currentWord.english
+        : currentWord.chinese;
+
+      answer.textContent = "";
+    }
+
+    card.addEventListener("click", function () {
+      if (!currentWord || isAnswerShown) return;
+
+      answer.textContent = showEnglishFirst
+        ? currentWord.chinese
+        : currentWord.english;
+
+      isAnswerShown = true;
+    });
+
+    async function addWord() {
+      const english = document.getElementById("english").value.trim();
+      const chinese = document.getElementById("chinese").value.trim();
+
+      if (!english || !chinese) {
+        alert("請輸入英文和中文");
+        return;
+      }
+
+      const { error } = await db
+        .from("words")
+        .insert({ english, chinese });
+
+      if (error) {
+        console.error(error);
+        alert("新增失敗");
+        return;
+      }
+
+      document.getElementById("english").value = "";
+      document.getElementById("chinese").value = "";
+
+      await loadWords();
+      alert("新增成功");
+    }
+
+    loadWords();
+  </script>
+
 </body>
 </html>
