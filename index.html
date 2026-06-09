@@ -1,146 +1,294 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <title>背單字卡片</title>
-  <style>
-    body {
-      font-family: Arial, "Microsoft JhengHei", sans-serif;
-      background: #f5f5f5;
-      text-align: center;
-      padding: 40px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>背單字卡片</title>
 
-    .card {
-      background: white;
-      width: 300px;
-      margin: 20px auto;
-      padding: 50px 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,.15);
-      font-size: 32px;
-      cursor: pointer;
-    }
+<style>
+body{
+    font-family: Arial, "Microsoft JhengHei", sans-serif;
+    background:#f5f5f5;
+    margin:0;
+    padding:30px;
+    text-align:center;
+}
 
-    .answer {
-      font-size: 24px;
-      min-height: 36px;
-      color: #555;
-    }
+h1{
+    margin-bottom:10px;
+}
 
-    input, button {
-      padding: 10px;
-      margin: 5px;
-      font-size: 16px;
-    }
-  </style>
+.count{
+    color:#666;
+    margin-bottom:20px;
+}
+
+.card{
+    width:320px;
+    min-height:140px;
+    margin:20px auto;
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    cursor:pointer;
+    padding:20px;
+}
+
+.answer{
+    min-height:40px;
+    font-size:24px;
+    color:#444;
+    margin-top:15px;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#4CAF50;
+    color:white;
+    margin:5px;
+}
+
+button:hover{
+    opacity:.9;
+}
+
+.form{
+    margin-top:40px;
+}
+
+input{
+    padding:10px;
+    margin:5px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    width:220px;
+}
+
+hr{
+    margin:40px auto;
+    max-width:600px;
+}
+</style>
+
 </head>
 <body>
 
-  <h1>背單字卡片</h1>
+<h1>📚 背單字卡片</h1>
 
-  <div id="card" class="card">載入中...</div>
-  <div id="answer" class="answer"></div>
+<div class="count" id="wordCount">
+載入中...
+</div>
 
-  <button onclick="nextCard()">下一張</button>
+<div class="card" id="card">
+載入中...
+</div>
 
-  <hr>
+<div class="answer" id="answer"></div>
 
-  <h2>新增單字</h2>
-  <input id="english" placeholder="英文，例如 happy">
-  <input id="chinese" placeholder="中文，例如 快樂">
-  <button onclick="addWord()">新增</button>
+<button onclick="nextCard()">下一張</button>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<hr>
 
-  <script>
-    const SUPABASE_URL = "https://khtgqtvvpunzbicuvbbc.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_gJrHKH854Gyxgqt67DZkAQ_knUwZvTA";
+<div class="form">
 
-    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<h2>新增單字</h2>
 
-    let words = [];
-    let currentWord = null;
-    let showEnglishFirst = true;
-    let isAnswerShown = false;
+<input
+    id="question"
+    placeholder="問題，例如 행복"
+/>
 
-    const card = document.getElementById("card");
-    const answer = document.getElementById("answer");
+<input
+    id="answerInput"
+    placeholder="答案，例如 快樂"
+/>
 
-    async function loadWords() {
-      const { data, error } = await db
+<br>
+
+<button onclick="addWord()">
+新增單字
+</button>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://khtgqtvvpunzbicuvbbc.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_gJrHKH854Gyxgqt67DZkAQ_knUwZvTA";
+
+const db =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+let words = [];
+let currentWord = null;
+let isAnswerShown = false;
+let showQuestionFirst = true;
+
+const card =
+document.getElementById("card");
+
+const answer =
+document.getElementById("answer");
+
+const wordCount =
+document.getElementById("wordCount");
+
+async function loadWords(){
+
+    const { data, error } =
+    await db
         .from("words")
-        .select("*")
-        .order("id", { ascending: true });
+        .select("*");
 
-      if (error) {
+    if(error){
+
         console.error(error);
-        card.textContent = "讀取失敗";
-        return;
-      }
 
-      words = data;
-      nextCard();
+        card.textContent =
+        "讀取失敗";
+
+        return;
     }
 
-    function nextCard() {
-      if (words.length === 0) {
-        card.textContent = "目前沒有單字";
-        answer.textContent = "";
+    words = data;
+
+    wordCount.textContent =
+    `目前單字數：${words.length}`;
+
+    nextCard();
+}
+
+function nextCard(){
+
+    if(words.length === 0){
+
+        card.textContent =
+        "目前沒有單字";
+
+        answer.textContent =
+        "";
+
         return;
-      }
-
-      const randomIndex = Math.floor(Math.random() * words.length);
-      currentWord = words[randomIndex];
-
-      showEnglishFirst = Math.random() > 0.5;
-      isAnswerShown = false;
-
-      card.textContent = showEnglishFirst
-        ? currentWord.english
-        : currentWord.chinese;
-
-      answer.textContent = "";
     }
 
-    card.addEventListener("click", function () {
-      if (!currentWord || isAnswerShown) return;
+    const randomIndex =
+    Math.floor(
+        Math.random() * words.length
+    );
 
-      answer.textContent = showEnglishFirst
-        ? currentWord.chinese
-        : currentWord.english;
+    currentWord =
+    words[randomIndex];
 
-      isAnswerShown = true;
-    });
+    showQuestionFirst =
+    Math.random() > 0.5;
 
-    async function addWord() {
-      const english = document.getElementById("english").value.trim();
-      const chinese = document.getElementById("chinese").value.trim();
+    isAnswerShown = false;
 
-      if (!english || !chinese) {
-        alert("請輸入英文和中文");
+    card.textContent =
+    showQuestionFirst
+        ? currentWord.question
+        : currentWord.answer;
+
+    answer.textContent = "";
+}
+
+card.addEventListener(
+"click",
+function(){
+
+    if(
+        !currentWord ||
+        isAnswerShown
+    ){
         return;
-      }
+    }
 
-      const { error } = await db
+    answer.textContent =
+    showQuestionFirst
+        ? currentWord.answer
+        : currentWord.question;
+
+    isAnswerShown = true;
+});
+
+async function addWord(){
+
+    const question =
+    document
+    .getElementById("question")
+    .value
+    .trim();
+
+    const answerValue =
+    document
+    .getElementById("answerInput")
+    .value
+    .trim();
+
+    if(
+        !question ||
+        !answerValue
+    ){
+
+        alert(
+        "請輸入問題與答案"
+        );
+
+        return;
+    }
+
+    const { error } =
+    await db
         .from("words")
-        .insert({ english, chinese });
+        .insert({
+            question: question,
+            answer: answerValue
+        });
 
-      if (error) {
+    if(error){
+
         console.error(error);
-        alert("新增失敗");
+
+        alert(
+        "新增失敗"
+        );
+
         return;
-      }
-
-      document.getElementById("english").value = "";
-      document.getElementById("chinese").value = "";
-
-      await loadWords();
-      alert("新增成功");
     }
 
-    loadWords();
-  </script>
+    document
+    .getElementById("question")
+    .value = "";
+
+    document
+    .getElementById("answerInput")
+    .value = "";
+
+    await loadWords();
+
+    alert(
+    "新增成功"
+    );
+}
+
+loadWords();
+
+</script>
 
 </body>
 </html>
