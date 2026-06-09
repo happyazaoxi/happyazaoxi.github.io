@@ -7,287 +7,226 @@
 
 <style>
 body{
-    font-family: Arial, "Microsoft JhengHei", sans-serif;
-    background:#f5f5f5;
-    margin:0;
-    padding:30px;
-    text-align:center;
-}
-
-h1{
-    margin-bottom:10px;
-}
-
-.count{
-    color:#666;
-    margin-bottom:20px;
+  font-family: Arial, "Microsoft JhengHei", sans-serif;
+  background:#f5f5f5;
+  margin:0;
+  padding:30px;
+  text-align:center;
 }
 
 .card{
-    width:320px;
-    min-height:140px;
-    margin:20px auto;
-    background:#fff;
-    border-radius:16px;
-    box-shadow:0 4px 12px rgba(0,0,0,.15);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:32px;
-    cursor:pointer;
-    padding:20px;
+  width:320px;
+  min-height:140px;
+  margin:20px auto;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  cursor:pointer;
+  padding:20px;
+  word-break:break-word;
 }
 
 .answer{
-    min-height:40px;
-    font-size:24px;
-    color:#444;
-    margin-top:15px;
+  min-height:40px;
+  font-size:24px;
+  color:#444;
+  margin-top:15px;
+}
+
+.info{
+  color:#666;
+  margin:6px 0;
 }
 
 button{
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    background:#4CAF50;
-    color:white;
-    margin:5px;
-}
-
-button:hover{
-    opacity:.9;
-}
-
-.form{
-    margin-top:40px;
+  padding:10px 20px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#4CAF50;
+  color:white;
+  margin:5px;
 }
 
 input{
-    padding:10px;
-    margin:5px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    width:220px;
+  padding:10px;
+  margin:5px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  width:220px;
 }
 
 hr{
-    margin:40px auto;
-    max-width:600px;
+  margin:40px auto;
+  max-width:600px;
 }
 </style>
-
 </head>
+
 <body>
 
 <h1>📚 背單字卡片</h1>
 
-<div class="count" id="wordCount">
-載入中...
-</div>
+<div class="info" id="wordCount">載入中...</div>
+<div class="info" id="progress"></div>
 
-<div class="card" id="card">
-載入中...
-</div>
-
+<div class="card" id="card">載入中...</div>
 <div class="answer" id="answer"></div>
 
 <button onclick="nextCard()">下一張</button>
 
 <hr>
 
-<div class="form">
-
 <h2>新增單字</h2>
 
-<input
-    id="question"
-    placeholder="問題，例如 행복"
-/>
-
-<input
-    id="answerInput"
-    placeholder="答案，例如 快樂"
-/>
-
+<input id="question" placeholder="問題，例如 행복">
+<input id="answerInput" placeholder="答案，例如 快樂">
 <br>
-
-<button onclick="addWord()">
-新增單字
-</button>
-
-</div>
+<button onclick="addWord()">新增單字</button>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+const SUPABASE_URL = "https://khtgqtvvpunzbicuvbbc.supabase.co";
+const SUPABASE_KEY = "sb_publishable_gJrHKH854Gyxgqt67DZkAQ_knUwZvTA";
 
-const SUPABASE_URL =
-"https://khtgqtvvpunzbicuvbbc.supabase.co";
-
-const SUPABASE_KEY =
-"sb_publishable_gJrHKH854Gyxgqt67DZkAQ_knUwZvTA";
-
-const db =
-supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+const db = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 let words = [];
+let shuffledWords = [];
+let currentIndex = 0;
+
 let currentWord = null;
 let isAnswerShown = false;
 let showQuestionFirst = true;
 
-const card =
-document.getElementById("card");
+const card = document.getElementById("card");
+const answer = document.getElementById("answer");
+const wordCount = document.getElementById("wordCount");
+const progress = document.getElementById("progress");
 
-const answer =
-document.getElementById("answer");
+function shuffleArray(array) {
+  const arr = [...array];
 
-const wordCount =
-document.getElementById("wordCount");
-
-async function loadWords(){
-
-    const { data, error } =
-    await db
-        .from("words")
-        .select("*");
-
-    if(error){
-
-        console.error(error);
-
-        card.textContent =
-        "讀取失敗";
-
-        return;
-    }
-
-    words = data;
-
-    wordCount.textContent =
-    `目前單字數：${words.length}`;
-
-    nextCard();
-}
-
-function nextCard(){
-
-    if(words.length === 0){
-
-        card.textContent =
-        "目前沒有單字";
-
-        answer.textContent =
-        "";
-
-        return;
-    }
-
-    const randomIndex =
-    Math.floor(
-        Math.random() * words.length
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(
+      Math.random() * (i + 1)
     );
 
-    currentWord =
-    words[randomIndex];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
 
-    showQuestionFirst =
-    Math.random() > 0.5;
-
-    isAnswerShown = false;
-
-    card.textContent =
-    showQuestionFirst
-        ? currentWord.question
-        : currentWord.answer;
-
-    answer.textContent = "";
+  return arr;
 }
 
-card.addEventListener(
-"click",
-function(){
+async function loadWords() {
+  const { data, error } = await db
+    .from("words")
+    .select("*")
+    .order("id", { ascending: true });
 
-    if(
-        !currentWord ||
-        isAnswerShown
-    ){
-        return;
-    }
+  if (error) {
+    console.error(error);
+    card.textContent = "讀取失敗";
+    wordCount.textContent = "無法讀取單字";
+    return;
+  }
 
-    answer.textContent =
-    showQuestionFirst
-        ? currentWord.answer
-        : currentWord.question;
+  words = data;
 
-    isAnswerShown = true;
+  wordCount.textContent =
+    `目前單字總數：${words.length}`;
+
+  shuffledWords = shuffleArray(words);
+  currentIndex = 0;
+
+  nextCard();
+}
+
+function nextCard() {
+  if (words.length === 0) {
+    card.textContent = "目前沒有單字";
+    answer.textContent = "";
+    progress.textContent = "進度：0 / 0";
+    return;
+  }
+
+  if (currentIndex >= shuffledWords.length) {
+    shuffledWords = shuffleArray(words);
+    currentIndex = 0;
+  }
+
+  currentWord = shuffledWords[currentIndex];
+  currentIndex++;
+
+  showQuestionFirst = Math.random() > 0.5;
+  isAnswerShown = false;
+
+  card.textContent = showQuestionFirst
+    ? currentWord.question
+    : currentWord.answer;
+
+  answer.textContent = "";
+
+  progress.textContent =
+    `本輪進度：${currentIndex} / ${shuffledWords.length}`;
+}
+
+card.addEventListener("click", function () {
+  if (!currentWord || isAnswerShown) return;
+
+  answer.textContent = showQuestionFirst
+    ? currentWord.answer
+    : currentWord.question;
+
+  isAnswerShown = true;
 });
 
-async function addWord(){
-
-    const question =
-    document
+async function addWord() {
+  const question = document
     .getElementById("question")
     .value
     .trim();
 
-    const answerValue =
-    document
+  const answerValue = document
     .getElementById("answerInput")
     .value
     .trim();
 
-    if(
-        !question ||
-        !answerValue
-    ){
+  if (!question || !answerValue) {
+    alert("請輸入問題與答案");
+    return;
+  }
 
-        alert(
-        "請輸入問題與答案"
-        );
+  const { error } = await db
+    .from("words")
+    .insert({
+      question: question,
+      answer: answerValue
+    });
 
-        return;
-    }
+  if (error) {
+    console.error(error);
+    alert("新增失敗");
+    return;
+  }
 
-    const { error } =
-    await db
-        .from("words")
-        .insert({
-            question: question,
-            answer: answerValue
-        });
+  document.getElementById("question").value = "";
+  document.getElementById("answerInput").value = "";
 
-    if(error){
+  await loadWords();
 
-        console.error(error);
-
-        alert(
-        "新增失敗"
-        );
-
-        return;
-    }
-
-    document
-    .getElementById("question")
-    .value = "";
-
-    document
-    .getElementById("answerInput")
-    .value = "";
-
-    await loadWords();
-
-    alert(
-    "新增成功"
-    );
+  alert("新增成功");
 }
 
 loadWords();
-
 </script>
 
 </body>
