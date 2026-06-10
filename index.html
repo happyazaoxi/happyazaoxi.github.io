@@ -219,11 +219,9 @@ async function addWord() {
 
 function showCardMode(){
 
-  cardSection.style.display =
-  "flex";
+  cardSection.style.display = "flex";
 
-  listMode.style.display =
-  "none";
+  listMode.style.display = "none";
 
   cardModeBtn.classList.add(
     "active"
@@ -236,11 +234,9 @@ function showCardMode(){
 
 function showListMode(){
 
-  cardSection.style.display =
-  "none";
+  cardSection.style.display = "none";
 
-  listMode.style.display =
-  "block";
+  listMode.style.display = "block";
 
   cardModeBtn.classList.remove(
     "active"
@@ -262,6 +258,22 @@ listModeBtn.addEventListener(
   "click",
   showListMode
 );
+
+function renderWordList(){
+
+  wordList.innerHTML = "";
+
+  words.forEach(word => {
+
+    const row = document.createElement("div");
+
+    row.className = "wordRow";
+
+    row.innerHTML = `<div class="wordQuestion">${word.question}</div><div class="wordAnswer">${word.answer}</div>`;
+
+    wordList.appendChild(row);
+  });
+}
 
 loadWords();
 
