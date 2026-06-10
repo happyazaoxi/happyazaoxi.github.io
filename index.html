@@ -32,6 +32,8 @@ html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Cond
 <div class="all">
 
   <section class="wordCount">
+    <button id="cardModeBtn">卡片模式</button>
+    <button id="listModeBtn">列表模式</button>
     <div class="info" id="wordCount">載入中...</div>
     <div class="info" id="progress"></div>
   </section>
@@ -42,6 +44,10 @@ html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Cond
     <button onclick="nextCard()" class="btn_next">下一張</button>
   </section>
   
+  <section class="listMode">
+    <div id="wordList"></div>
+  </section>
+
   <section class="addZone">
     <input id="question" placeholder="韓文">
     <input id="answerInput" placeholder="中文">
@@ -76,6 +82,12 @@ const wordCount = document.getElementById("wordCount");
 const progress = document.getElementById("progress");
 const saveBtn = document.getElementById("saveBtn");
   
+const cardSection = document.querySelector(".card");
+const listMode = document.querySelector(".listMode");
+const wordList = document.getElementById("wordList");
+const cardModeBtn = document.getElementById("cardModeBtn");
+const listModeBtn = document.getElementById("listModeBtn");
+
 function shuffleArray(array) {
   const arr = [...array];
 
@@ -205,7 +217,55 @@ async function addWord() {
   alert("新增成功");
 }
 
+function showCardMode(){
+
+  cardSection.style.display =
+  "flex";
+
+  listMode.style.display =
+  "none";
+
+  cardModeBtn.classList.add(
+    "active"
+  );
+
+  listModeBtn.classList.remove(
+    "active"
+  );
+}
+
+function showListMode(){
+
+  cardSection.style.display =
+  "none";
+
+  listMode.style.display =
+  "block";
+
+  cardModeBtn.classList.remove(
+    "active"
+  );
+
+  listModeBtn.classList.add(
+    "active"
+  );
+
+  renderWordList();
+}
+
+cardModeBtn.addEventListener(
+  "click",
+  showCardMode
+);
+
+listModeBtn.addEventListener(
+  "click",
+  showListMode
+);
+
 loadWords();
+
+showCardMode();
 </script>
 
 </body>
