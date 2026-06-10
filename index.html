@@ -45,7 +45,7 @@ html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Cond
   <section class="addZone">
     <input id="question" placeholder="韓文">
     <input id="answerInput" placeholder="中文">
-    <button onclick="addWord()">儲存</button>
+    <button id="saveBtn" onclick="addWord()">儲存</button>
   </section>
 
 </div>
@@ -68,12 +68,14 @@ let currentIndex = 0;
 let currentWord = null;
 let isAnswerShown = false;
 let showQuestionFirst = true;
+let isSaving = false;
 
 const card = document.getElementById("card");
 const answer = document.getElementById("answer");
 const wordCount = document.getElementById("wordCount");
 const progress = document.getElementById("progress");
-
+const saveBtn = document.getElementById("saveBtn");
+  
 function shuffleArray(array) {
   const arr = [...array];
 
@@ -152,6 +154,8 @@ card.addEventListener("click", function () {
 });
 
 async function addWord() {
+  if (isSaving) return;
+
   const question = document
     .getElementById("question")
     .value
@@ -167,6 +171,10 @@ async function addWord() {
     return;
   }
 
+  isSaving = true;
+  saveBtn.disabled = true;
+  saveBtn.textContent = "儲存中...";
+
   const { error } = await db
     .from("words")
     .insert({
@@ -177,6 +185,11 @@ async function addWord() {
   if (error) {
     console.error(error);
     alert("新增失敗");
+
+    isSaving = false;
+    saveBtn.disabled = false;
+    saveBtn.textContent = "儲存";
+
     return;
   }
 
@@ -184,6 +197,10 @@ async function addWord() {
   document.getElementById("answerInput").value = "";
 
   await loadWords();
+
+  isSaving = false;
+  saveBtn.disabled = false;
+  saveBtn.textContent = "儲存";
 
   alert("新增成功");
 }
