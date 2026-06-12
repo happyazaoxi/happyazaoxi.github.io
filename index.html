@@ -12,9 +12,9 @@
 html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Condensed", "Noto Sans TC", "微軟正黑體", sans-serif;}
 .all{ display: flex; flex-direction: column; width: 500px; max-width: calc(100vw - 20px); height: calc(100dvh - 20px); padding: 10px 10px 0; margin: 10px auto 0; background: #b2d5e1; border-radius: 5px; box-sizing: border-box;}
 
-.wordCount{ display: flex; justify-content: flex-end;}
+.wordCount{ display: flex; gap: 10px;}
 .wordCount #wordCount{ display: none;}
-.wordCount #progress{ padding: 5px 10px; background: #5ba7c0; color: #fff; border-radius: 5px;}
+.wordCount #progress{ margin: 0 0 0 auto; padding: 5px 10px; background: #5ba7c0; color: #fff; border-radius: 5px;}
 
 .card{ display: flex; flex-direction: column; flex: 1; margin: 10px 0;}
 .card #answer{ display: flex; align-items: center; justify-content: center; flex: 1; background: #fff8f2; color: #5ba7c0; border-radius: 5px; font-size: 2rem;}
@@ -34,7 +34,7 @@ html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Cond
 .wordRow .wordAnswer{ flex: 1; border-left: 1px solid #5ba7c0; text-align: center; padding: 5px;}
 
 #cardModeBtn,
-#listModeBtn{ border: 0; background: #357189; border-radius: 5px;}
+#listModeBtn{ border: 1px dashed #b2d5e1; background: #5ba7c0; border-radius: 5px; box-sizing: border-box; color: #fff;}
 #cardModeBtn.active,
 #listModeBtn.active{ background: #5ba7c0;}
 </style>
