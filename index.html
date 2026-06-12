@@ -30,8 +30,13 @@ html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Cond
 
 .wordRow{ display: flex; border: 1px solid #5ba7c0;}
 .wordRow+.wordRow{ border-top: none;}
-.wordRow .wordQuestion{ flex: 1;}
-.wordRow .wordAnswer{ flex: 1; border-left: 1px solid #5ba7c0;}
+.wordRow .wordQuestion{ flex: 1; text-align: center; padding: 5px;}
+.wordRow .wordAnswer{ flex: 1; border-left: 1px solid #5ba7c0; text-align: center; padding: 5px;}
+
+#cardModeBtn,
+#listModeBtn{ border: 0; background: #357189; border-radius: 5px;}
+#cardModeBtn.active,
+#listModeBtn.active{ background: #5ba7c0;}
 </style>
 </head>
 
