@@ -24,6 +24,14 @@ html,body{ margin: 0; padding: 0; font-family: "Chiron GoRound TC", "Roboto Cond
 .addZone{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 0 0 -10px; padding: 10px; width: calc(100% + 20px); background: #5ba7c0; border-radius: 0 0 5px 5px; box-sizing: border-box;}
 .addZone input{ width: 100%; border: none; padding: 5px 10px; border-radius: 5px; box-sizing: border-box; text-align: center;}
 .addZone button{ border: none; box-shadow: none; width: 100%; border-radius: 5px; background: #357189; color: #fff; cursor: pointer;}
+
+.listMode{ flex: 1; margin: 10px 0; background: #fff8f2; border-radius: 5px; overflow: auto;}
+.listMode #wordList{ padding: 30px 20px;}
+
+.wordRow{ display: flex; border: 1px solid #5ba7c0;}
+.wordRow+.wordRow{ border-top: none;}
+.wordRow .wordQuestion{ flex: 1;}
+.wordRow .wordAnswer{ flex: 1; border-left: 1px solid #5ba7c0;}
 </style>
 </head>
 
