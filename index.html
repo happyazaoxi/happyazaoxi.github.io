@@ -81,6 +81,7 @@ const db = supabase.createClient(
 );
 
 let words = [];
+let allWords = [];
 let shuffledWords = [];
 let currentIndex = 0;
 
@@ -116,24 +117,35 @@ function shuffleArray(array) {
 }
 
 async function loadWords() {
-  const { data, error } = await db
+
+  const { data: allData } =
+  await db
     .from("words")
     .select("*")
     .order("id", { ascending: true });
 
+  allWords = allData || [];
+
+  const { data, error } =
+  await db
+    .from("words")
+    .select("*")
+    .eq("hidden", false)
+    .order("id", { ascending: true });
+
   if (error) {
     console.error(error);
-    card.textContent = "讀取失敗";
-    wordCount.textContent = "無法讀取單字";
     return;
   }
 
   words = data;
 
   wordCount.textContent =
-    `目前總數：${words.length}`;
+  `目前總數：${words.length}`;
 
-  shuffledWords = shuffleArray(words);
+  shuffledWords =
+  shuffleArray(words);
+
   currentIndex = 0;
 
   nextCard();
@@ -276,16 +288,47 @@ function renderWordList(){
 
   wordList.innerHTML = "";
 
-  words.forEach(word => {
+  allWords.forEach(word => {
 
     const row = document.createElement("div");
 
     row.className = "wordRow";
 
-    row.innerHTML = `<div class="wordQuestion">${word.question}</div><div class="wordAnswer">${word.answer}</div>`;
+    row.innerHTML = `<div class="wordQuestion">${word.question}</div><div class="wordAnswer">${word.answer}</div><button onclick="hideWord(${word.id})">${word.hidden ? "已隱藏" : "不顯示"}</button>`;
 
     wordList.appendChild(row);
   });
+}
+
+async function hideWord(id){
+
+  const ok =
+  confirm(
+    "確定不要再出現在卡片模式？"
+  );
+
+  if(!ok) return;
+
+  const { error } =
+  await db
+    .from("words")
+    .update({
+      hidden: true
+    })
+    .eq("id", id);
+
+  if(error){
+
+    console.error(error);
+
+    alert("更新失敗");
+
+    return;
+  }
+
+  await loadWords();
+
+  renderWordList();
 }
 
 loadWords();
