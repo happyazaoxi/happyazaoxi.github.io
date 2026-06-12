@@ -294,26 +294,19 @@ function renderWordList(){
 
     row.className = "wordRow";
 
-    row.innerHTML = `<div class="wordQuestion">${word.question}</div><div class="wordAnswer">${word.answer}</div><button onclick="hideWord(${word.id})">${word.hidden ? "已隱藏" : "不顯示"}</button>`;
+    row.innerHTML = `<div class="wordQuestion">${word.question}</div><div class="wordAnswer">${word.answer}</div><button onclick="toggleWord(${word.id}, ${word.hidden})">${word.hidden ? "顯示" : "不顯示"}</button>`;
 
     wordList.appendChild(row);
   });
 }
 
-async function hideWord(id){
-
-  const ok =
-  confirm(
-    "確定不要再出現在卡片模式？"
-  );
-
-  if(!ok) return;
+async function toggleWord(id, hidden){
 
   const { error } =
   await db
     .from("words")
     .update({
-      hidden: true
+      hidden: !hidden
     })
     .eq("id", id);
 
