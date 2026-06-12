@@ -287,19 +287,23 @@ function renderWordList(){
 
     row.className = "wordRow";
 
-    row.innerHTML = `<div class="wordQuestion">${word.question}</div><div class="wordAnswer">${word.answer}</div><button onclick="toggleWord(${word.id}, ${word.hidden})">${word.hidden ? "顯示" : "不顯示"}</button>`;
+    row.innerHTML = 
+    `
+    <div class="wordQuestion">${word.question}</div><div class="wordAnswer">${word.answer}</div>
+    <label><input type="checkbox" ${!word.hidden ? "checked" : ""} onchange="toggleWord(${word.id}, this.checked)"></label>
+    `;
 
     wordList.appendChild(row);
   });
 }
 
-async function toggleWord(id, hidden){
+async function toggleWord(id, checked){
 
   const { error } =
   await db
     .from("words")
     .update({
-      hidden: !hidden
+      hidden: !checked
     })
     .eq("id", id);
 
