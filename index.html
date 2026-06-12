@@ -90,7 +90,6 @@ let isSaving = false;
 
 const card = document.getElementById("card");
 const answer = document.getElementById("answer");
-const wordCount = document.getElementById("wordCount");
 const progress = document.getElementById("progress");
 const saveBtn = document.getElementById("saveBtn");
   
@@ -137,9 +136,6 @@ async function loadWords() {
   }
 
   words = data;
-
-  wordCount.textContent =
-  `目前總數：${words.length}`;
 
   shuffledWords =
   shuffleArray(words);
